@@ -1,0 +1,24 @@
+services:
+  panhub:
+    build: .
+    container_name: panhub
+    ports:
+      - "33456:80"       # 左边自定义，右边必须与 Dockerfile 的 EXPOSE 一致
+    restart: unless-stopped
+    volumes:
+      - /tmp/zfsv3/sata15/17858835210/data/docker/panhub/data:/app/data
+    networks:
+      - panhub-net         # 引用下方定义的网络
+
+
+
+networks:
+  panhub-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.88.0.0/24
+          gateway: 10.88.0.1
+
+
+
